@@ -8,16 +8,16 @@ class Player:
     def __init__(self,
                  email: str,
                  first_name: str,
-                 family_name: str = "",
-                 suggestion: List[str] = [],
-                 black_list: bool = False  # Don't offer gifts to them
+                 surname: str = "",
+                 include: List[str] = [],  # Offer gifts only to them. Empty list means offer to everybody
+                 exclude: List[str] = []  # Don't offer gifts to them
                  ):
         self.first_name: str = first_name
-        self.name: str = first_name if family_name == "" else first_name+" "+family_name
+        self.name: str = first_name if surname == "" else first_name+" "+surname
 
         self.email: str = email
-        self.suggestion: List[str] = suggestion
-        self.black_list: bool = black_list
+        self.include: List[str] = include
+        self.exclude: List[str] = exclude
         self.friends_indices: List[int] = []  # Ids of friends inside list
 
     def __repr__(self):
@@ -26,13 +26,14 @@ class Player:
     def add_friends(self, possible_friends: List['Player']):
         possibles_names = [f.name for f in possible_friends]
 
-        for n in self.suggestion:
-            assert n in possibles_names, f"Invalid name \"{n}\" : {possibles_names}"
+        for n in self.include:
+            assert n in possibles_names, f"Unknown name \"{n}\" : {possibles_names}"
 
         for i, n in enumerate(possibles_names):
             if n != self.name:
-                if self.black_list == (n not in self.suggestion):
-                    self.friends_indices.append(i)
+                if len(self.include) == 0 or n in self.include:
+                    if n not in self.exclude:
+                        self.friends_indices.append(i)
 
 
 class SecretSanta:
@@ -124,10 +125,10 @@ class SecretSanta:
 
 if __name__ == "__main__":
     players = [
-        Player(first_name="A", email="aaaa", suggestion=["D"]),
+        Player(first_name="A", email="aaaa", include=["D"]),
         Player(first_name="B", email="bbbb"),
         Player(first_name="C", email="cccc"),
-        Player(first_name="D", email="dddd", suggestion=["A", "B"], black_list=True)
+        Player(first_name="D", email="dddd", exclude=["A", "B"])
     ]
 
     email_sender = "XXXX@XXXX"
