@@ -58,6 +58,16 @@ class SecretSanta:
         for p in self.players:
             p.add_friends(self.players)
 
+        new_solo_players = [p for p in self.players if len(p.friends_indices) == 1]
+        while len(new_solo_players) != 0:
+            solo_p = new_solo_players.pop()
+            i = solo_p.friends_indices[0]
+            for p in self.players:
+                if p.name != solo_p.name and i in p.friends_indices:
+                    p.friends_indices.remove(i)
+                    if len(p.friends_indices) == 1:
+                        new_solo_players.append(p)
+
         print("--- Players ---")
         for p in self.players:
             print(f"{p.name}: " + ", ".join([self.players[idx].name for idx in p.friends_indices]))
@@ -83,6 +93,10 @@ class SecretSanta:
 
     def build(self) -> bool:
         self._solution = None
+        if any(len(p.friends_indices) == 0 for p in self.players):
+            print("Impossible to link players.")
+            return False
+
         links = []
         if not self._build_backtracking(0, links):
             print("Impossible to link players.")
