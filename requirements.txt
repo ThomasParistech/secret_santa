@@ -1,0 +1,5 @@
+dataclasses
+fire
+networkx
+pyvis
+typing

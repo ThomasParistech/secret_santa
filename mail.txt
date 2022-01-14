@@ -1,0 +1,6 @@
+[Secret Santa] _______MAIL_OBJECT_______
+Hi {src}!
+______________
+_______YOU_HAVE_TO_OFFER_A_GIFT_TO___ {dst}  ______________
+______________
+Merry Christmas
