@@ -2,47 +2,47 @@
     "players": [
         {
             "email": "aaaa@aaaaaaaa",
-            "first_name": "Thomas",
+            "first_name": "A",
             "family_name": "",
             "include": [
-                "Benjamin"
+                "D"
             ],
             "exclude": []
         },
         {
-            "email": "aaaa@aaaaaaaa",
-            "first_name": "Anthony",
+            "email": "bbbb@bbbbbbbb",
+            "first_name": "B",
             "family_name": "",
             "include": [],
             "exclude": []
         },
         {
-            "email": "aaaa@aaaaaaaa",
-            "first_name": "Agathe",
+            "email": "cccc@cccccccc",
+            "first_name": "C",
             "family_name": "",
             "include": [],
             "exclude": []
         },
         {
-            "email": "aaaa@aaaaaaaa",
-            "first_name": "Benjamin",
+            "email": "dddd@dddddddd",
+            "first_name": "D",
             "family_name": "",
             "include": [],
-            "exclude": ["Thomas", "Anthony"]
+            "exclude": ["E", "B"]
         },
         {
-            "email": "aaaa@aaaaaaaa",
-            "first_name": "Mathieu",
+            "email": "eeee@eeeeeeee",
+            "first_name": "E",
             "family_name": "",
             "include": [],
-            "exclude": ["Benjamin", "Agathe"]
+            "exclude": ["D", "C"]
         },
         {
-            "email": "aaaa@aaaaaaaa",
-            "first_name": "Tim",
+            "email": "ffff@ffffffff",
+            "first_name": "F",
             "family_name": "",
             "include": [],
-            "exclude": ["Thomas", "Anthony"]
+            "exclude": ["A", "B"]
         }
     ]
 }
