@@ -14,12 +14,14 @@ class PlayerInfo:
     email: str
     first_name: str
     family_name: str = ""
-    include: List[str] = field(default_factory=list)  # Offer gifts only to them. Empty list means offer to everybody
-    exclude: List[str] = field(default_factory=list)  # Don't offer gifts to them
+    # Offer gifts only to them. Empty list means offer to everybody
+    include: List[str] = field(default_factory=list)
+    # Don't offer gifts to them
+    exclude: List[str] = field(default_factory=list)
 
     @property
     def name(self) -> str:
-        return self.first_name if self.family_name == "" else f"{self.family_name} {self.family_name}"
+        return f"{self.first_name} {self.family_name}".strip()
 
 
 @dataclass

@@ -31,15 +31,26 @@ def _show_solution(players: ListOfPlayerInfo, possible_ids: List[List[int]], id_
 
 
 def _init_possible_recipients(players: ListOfPlayerInfo) -> List[List[int]]:
-    # Apply inclusion and exclusion lists to get all possible recipients for each player
+    """
+    Apply inclusion and exclusion lists
+    to get all possible recipients for each player.
+    """
     all_names = [player.name for player in players]
-    possible_ids: List[List[int]] = [[idx for idx, other_name in enumerate(all_names)
-                                      if other_name != player.name and
-                                      (len(player.include) == 0 or other_name in player.include) and
-                                      player not in player.exclude]
-                                     for player in players]
+    possible_ids: List[List[int]] = [
+        [idx for idx, other_name in enumerate(all_names)
+         if other_name != player.name and
+         (len(player.include) == 0 or other_name in player.include) and
+         player not in player.exclude]
+        for player in players]
 
-    # Find players with a single recipient and remove useless possible recipients
+    return possible_ids
+
+
+def _refine_possible_recipients(possible_ids: List[List[int]]) -> List[List[int]]:
+    """
+    Find players with a single possible recipient
+    and reduce the possibilities of the other players
+    """
     known_players = [idx for idx, list_ids in enumerate(possible_ids)
                      if len(list_ids) == 1]
     while len(known_players) != 0:
@@ -51,6 +62,35 @@ def _init_possible_recipients(players: ListOfPlayerInfo) -> List[List[int]]:
                 if len(list_ids) == 1:
                     known_players.append(idx)
 
+    return possible_ids
+
+
+def _backtrack(possible_ids: List[List[int]],
+               current_id_chain: List[int]) -> bool:
+    """
+    Explore all possible paths by iterating over players' possibilities.
+    """
+    if len(current_id_chain) == len(possible_ids):
+        if current_id_chain[0] in possible_ids[current_id_chain[-1]]:
+            return True
+    else:
+        for idx in possible_ids[current_id_chain[-1]]:
+            if not idx in current_id_chain:
+                current_id_chain.append(idx)
+                if _backtrack(possible_ids, current_id_chain):
+                    return True
+                current_id_chain.pop()
+    return False
+
+
+def solve(players: ListOfPlayerInfo) -> Optional[List[int]]:
+    """
+    Find a connected path among the players.
+    """
+    players.shuffle()
+    possible_ids = _init_possible_recipients(players)
+    possible_ids = _refine_possible_recipients(possible_ids)
+
     # Print all possible recipients
     print("--- Players ---")
     for src_idx, list_ids in enumerate(possible_ids):
@@ -58,39 +98,11 @@ def _init_possible_recipients(players: ListOfPlayerInfo) -> List[List[int]]:
                                     dst=", ".join([players[dst_idx].name for dst_idx in list_ids])))
     print("---------------")
 
-    return possible_ids
-
-
-def _backtrack(possible_ids: List[List[int]],
-               new_idx: int,
-               current_id_chain: List[int]) -> bool:
-    current_id_chain.append(new_idx)
-
-    if len(current_id_chain) == len(possible_ids):
-        if current_id_chain[0] in possible_ids[new_idx]:
-            return True
-    else:
-        for idx in possible_ids[new_idx]:
-            if not idx in current_id_chain:
-                if _backtrack(possible_ids, idx, current_id_chain):
-                    return True
-
-    current_id_chain.pop()
-    return False
-
-
-def solve(players: ListOfPlayerInfo) -> Optional[List[int]]:
-    """
-    AAAA
-    """
-    players.shuffle()
-    possible_ids = _init_possible_recipients(players)
-
     if any(len(list_ids) == 0 for list_ids in possible_ids):
         return None
 
-    id_chain = []
-    if not _backtrack(possible_ids, 0, id_chain):
+    id_chain = [0]
+    if not _backtrack(possible_ids, id_chain):
         return None
 
     print("Solution: {}".format(" -> ".join([players[idx].name for idx in id_chain])))
@@ -99,33 +111,41 @@ def solve(players: ListOfPlayerInfo) -> Optional[List[int]]:
     return id_chain
 
 
-def main(players: str,
-         adress: str = "",
-         pwd: str = "",
-         txt: str = ""):
+def main(players_json: str,
+         mail_address: str = "",
+         mail_pwd: str = "",
+         mail_txt: str = ""):
     """
-    AAAAA
+    Find an optimal Secret Santa draw
+    and notify participants by email.
+
+    Args:
+        players_json: JSON file containing players information
+        mail_adress: Secret Santa's mail address
+        mail_pwd: Secret Santa's mail password
+        mail_txt: TXT file containing the object and body of the mail template
     """
     try:
-        assert txt.endswith(".txt")
-        email_sender = EmailSender(adress, pwd, txt)
+        assert mail_txt.endswith(".txt")
+        email_sender = EmailSender(mail_address, mail_pwd, mail_txt)
         print("Email sender has been successfully instantiated.")
     except Exception as err:
         email_sender = None
-        if adress == "" and pwd == "" and txt == "":
+        if mail_address == "" and mail_pwd == "" and mail_txt == "":
             print("Skip email automation.")
         else:
             print("Failed to instantiate the email sender.")
 
-    assert players.endswith(".json")
-    players_info = ListOfPlayerInfo.load(players)
-    id_chain = solve(players_info)
+    assert players_json.endswith(".json")
+    players = ListOfPlayerInfo.load(players_json)
+    id_chain = solve(players)
     if id_chain is None:
         print("Impossible to link players.")
         exit(1)
 
     if email_sender is not None:
-        email_sender.send_mails(players_info, id_chain)
+        links = zip(id_chain, id_chain[1:] + id_chain[0])
+        email_sender.send_mails(players, links)
 
 
 if __name__ == "__main__":

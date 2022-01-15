@@ -3,7 +3,7 @@
 import smtplib
 from dataclasses import dataclass
 from email.mime.text import MIMEText
-from typing import List
+from typing import List, Tuple
 
 from players_info import ListOfPlayerInfo
 
@@ -25,9 +25,6 @@ class EmailSender:
     mail_body: str
 
     def __init__(self, adress: str, password: str, mail_txt_file: str):
-        """"
-        AAAA
-        """
         self.adress = adress
         self.password = password
 
@@ -40,13 +37,10 @@ class EmailSender:
             assert "{src}" in self.mail_body and "{dst}" in self.mail_body, \
                 "Invalid mail body. Must include {src} and {dst}."
 
-    def send_mails(self, players: ListOfPlayerInfo, id_chain: List[int]):
-        """"
-        AAAA
-        """
-        assert len(players) == len(id_chain)
+    def send_mails(self, players: ListOfPlayerInfo, links: List[Tuple[int, int]]):
+        assert len(players) == len(links)
 
-        for src_id, dst_id in zip(id_chain, id_chain[1:] + id_chain[0]):
+        for src_id, dst_id in links:
             try:
                 server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
                 server.ehlo()
