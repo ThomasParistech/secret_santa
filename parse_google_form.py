@@ -50,7 +50,7 @@ def print_homogeneous_teams(dikt: Dict[str, List[PlayerInfo]], team_size: int):
     n_people = sum(counts)
     n_teams = math.ceil(n_people/team_size)
     print(f"There are {n_people} people and {n_teams} teams of size {team_size}")
-
+    print(f"Names of teams: {', '.join(names)}")
     all_teams: List[List[List[str]]] = [[] for _ in range(team_size)]
     all_teams[0] = [[] for _ in range(n_teams)]
 
@@ -88,6 +88,10 @@ def print_homogeneous_teams(dikt: Dict[str, List[PlayerInfo]], team_size: int):
 
     names_per_team = {name: [player.name for player in players]
                       for name, players in dikt.items()}
+
+    print()
+    for k, group in enumerate(final_groups+incomplete_groups):
+        print(f"{k+1}) " + ", ".join(group))
 
     for k, group in enumerate(final_groups+incomplete_groups):
         print(f"{k+1}) " + ", ".join([names_per_team[team].pop() for team in group]))
