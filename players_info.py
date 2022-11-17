@@ -60,6 +60,10 @@ class ListOfPlayerInfo:
             players.check()
             return players
 
+    def write(self, path: str):
+        with open(path, "w", encoding="utf-8") as _f:
+            json.dump(dataclasses.asdict(self), _f, indent=4)
+
     @staticmethod
     def dump_template(path: str, n_players: int):
         infos = ListOfPlayerInfo([PlayerInfo(email=f"_______EMAIL_{k}_______",
@@ -67,6 +71,4 @@ class ListOfPlayerInfo:
                                              include=["", f"_______INCLUDE_NAME_{k}_______"],
                                              exclude=2*[f"_______EXCLUDE_NAME_{k}_______"])
                                  for k in range(n_players)])
-
-        with open(path, "w", encoding="utf-8") as _f:
-            json.dump(dataclasses.asdict(infos), _f, indent=4)
+        infos.write(path)

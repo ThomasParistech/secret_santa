@@ -40,7 +40,7 @@ def _init_possible_recipients(players: ListOfPlayerInfo) -> List[List[int]]:
         [idx for idx, other_name in enumerate(all_names)
          if other_name != player.name and
          (len(player.include) == 0 or other_name in player.include) and
-         player not in player.exclude]
+         other_name not in player.exclude]
         for player in players]
 
     return possible_ids

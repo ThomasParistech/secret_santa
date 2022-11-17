@@ -1,0 +1,84 @@
+{
+    "players": [
+        {
+            "email": "c.rouch@checkandvisit.com",
+            "first_name": "cc",
+            "family_name": "CC",
+            "include": [],
+            "exclude": [
+                "dd DD"
+            ]
+        },
+        {
+            "email": "d.rouch@checkandvisit.com",
+            "first_name": "dd",
+            "family_name": "DD",
+            "include": [],
+            "exclude": [
+                "cc CC"
+            ]
+        },
+        {
+            "email": "e.rouch@checkandvisit.com",
+            "first_name": "ee",
+            "family_name": "EE",
+            "include": [],
+            "exclude": [
+                "ff FF",
+                "gg GG",
+                "hh HH"
+            ]
+        },
+        {
+            "email": "f.rouch@checkandvisit.com",
+            "first_name": "ff",
+            "family_name": "FF",
+            "include": [],
+            "exclude": [
+                "ee EE",
+                "gg GG",
+                "hh HH"
+            ]
+        },
+        {
+            "email": "g.rouch@checkandvisit.com",
+            "first_name": "gg",
+            "family_name": "GG",
+            "include": [],
+            "exclude": [
+                "ee EE",
+                "ff FF",
+                "hh HH"
+            ]
+        },
+        {
+            "email": "h.rouch@checkandvisit.com",
+            "first_name": "hh",
+            "family_name": "HH",
+            "include": [],
+            "exclude": [
+                "ee EE",
+                "ff FF",
+                "gg GG"
+            ]
+        },
+        {
+            "email": "a.rouch@checkandvisit.com",
+            "first_name": "aa",
+            "family_name": "AA",
+            "include": [],
+            "exclude": [
+                "bb BB"
+            ]
+        },
+        {
+            "email": "b.rouch@checkandvisit.com",
+            "first_name": "bb",
+            "family_name": "BB",
+            "include": [],
+            "exclude": [
+                "aa AA"
+            ]
+        }
+    ]
+}
