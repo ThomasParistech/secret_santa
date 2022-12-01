@@ -134,7 +134,7 @@ def main(players_json: str,
         if mail_address == "" and mail_pwd == "" and mail_txt == "":
             print("Skip email automation.")
         else:
-            print("Failed to instantiate the email sender.")
+            print(f"Failed to instantiate the email sender:\n{err}")
 
     assert players_json.endswith(".json")
     players = ListOfPlayerInfo.load(players_json)
@@ -144,7 +144,7 @@ def main(players_json: str,
         exit(1)
 
     if email_sender is not None:
-        links = zip(id_chain, id_chain[1:] + id_chain[0])
+        links = list(zip(id_chain, id_chain[1:] + [id_chain[0]]))
         email_sender.send_mails(players, links)
 
 

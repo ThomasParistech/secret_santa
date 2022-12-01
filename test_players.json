@@ -1,0 +1,25 @@
+{
+    "players": [
+        {
+            "email": "thom01.rouch@gmail.com",
+            "first_name": "Tom",
+            "family_name": "Gmail",
+            "include": [],
+            "exclude": []
+        },
+        {
+            "email": "thomas.rouch@checkandvisit.com",
+            "first_name": "Tomcv",
+            "family_name": "Test",
+            "include": [],
+            "exclude": []
+        },
+        {
+            "email": "thomas.rouch@checkandvisit.com",
+            "first_name": "Tomaaaaacv",
+            "family_name": "Teaaast",
+            "include": [],
+            "exclude": []
+        }
+    ]
+}

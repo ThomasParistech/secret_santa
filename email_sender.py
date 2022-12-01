@@ -56,8 +56,9 @@ class EmailSender:
                 server.send_message(msg)
                 server.close()
                 print(f'Email sent to {src.email}!')
-            except:
-                print(f'Failed to send email to {src.email}...')
+            except Exception as e:
+                print(e)
+                print(f'Failed to send email to {players[src_id].email}...')
 
     @staticmethod
     def dump_mail_template(path: str):
