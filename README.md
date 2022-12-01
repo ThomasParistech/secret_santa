@@ -14,3 +14,8 @@ Write your mail inside MAIL_BODY.txt and finally run the Secret Santa and send e
 ```
 python3 main.py --players_json PLAYERS.json --mail_address MY_MAIL@gmail.com --mail_pwd MY_APP_PASSWORD --mail_txt MAIL_BODY.txt
 ```
+
+Have a look at my Medium articles explaining how it works:
+- [Let me help you organize your best Secret Santa ever](https://medium.com/@thom01.rouch/let-me-help-you-organize-your-best-secret-santa-ever-c0fef5e61ba2)
+
+- TODO
