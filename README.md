@@ -18,4 +18,4 @@ python3 main.py --players_json PLAYERS.json --mail_address MY_MAIL@gmail.com --m
 Have a look at my Medium articles explaining how it works:
 - [Let me help you organize your best Secret Santa ever](https://medium.com/@thom01.rouch/let-me-help-you-organize-your-best-secret-santa-ever-c0fef5e61ba2)
 
-- TODO
+- [Secret Santa from a Google Form](https://medium.com/@thom01.rouch/secret-santa-from-a-google-form-32841566d984)
